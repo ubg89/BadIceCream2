@@ -10,6 +10,7 @@ if(!isMobile){
 (function (){
 	var scope = {};
 
+	scope.gameCanvas = null;
 	scope.skinnerObject = null;
 	scope.target = null;
 	scope.edgeLeft = null;
@@ -102,6 +103,23 @@ if(!isMobile){
 		scope.pauseBut.ontouchstart = ()=>{
 			scope.target.triggerKeyEvent('keydown', 'P'.charCodeAt(0));
 			setTimeout(()=>{scope.target.triggerKeyEvent('keyup', 'P'.charCodeAt(0))}, 50);
+			const bounds = scope.gameCanvas.getBoundingClientRect();
+			try{
+				if(scope.gameCanvas){
+					let touchEvent;
+					if(scope.isPaused){
+						touchEvent = new Event('touchend');
+						touchEvent.touches = touchEvent.changedTouches = [{clientX: bounds.left+bounds.width/2, clientY: bounds.top+5}];
+					}else{
+						touchEvent = new Event('touchstart');
+						touchEvent.touches = touchEvent.changedTouches = [{clientX: bounds.left+bounds.width-10, clientY: bounds.top+10}];
+					}
+					scope.gameCanvas.dispatchEvent(touchEvent)
+					scope.isPaused = !scope.isPaused;
+				}
+			}catch(e){
+				console.log(e);
+			}
 
 			pauseButtonImage.src = scope.skinnerObject.sprites['pause_down.png'];
 		}
@@ -302,6 +320,27 @@ if(!isMobile){
 				}
 			}
 			tryToInit();
+
+			const oldGameplayStart = PokiSDK.gameplayStart;
+			PokiSDK.gameplayStart = ()=>{
+				scope.cancelNextPress = true;
+				oldGameplayStart();
+			}
+
+			const searchCanvasInterval = setInterval(()=>{
+				const canvas = document.querySelector('canvas');
+				if(canvas){
+					scope.gameCanvas = canvas;
+					clearInterval(searchCanvasInterval);
+					scope.gameCanvas.addEventListener('touchstart', ()=>{
+							if (!scope.cancelNextPress && parseFloat(scope.target.domElement.style.opacity) <= scope.target.settings.offOpacity) {
+								scope.target.triggerKeyEvent('keydown', 32);
+							}
+							scope.cancelNextPress = false;
+
+					});
+				}
+			}, 100);
 		})
 	}
 	scope.init();

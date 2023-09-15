@@ -9,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
 
-	<title>Bad Ice Cream Unblocked - ubg235 Poki</title>
+	<title>Bad Ice Cream 2 Unblocked - ubg235 Poki</title>
 
 	<script src="patch/js/poki-sdk.js?v=2"></script>
 	<script type="text/javascript" src="./js/loader.js"></script>
@@ -76,6 +76,7 @@
 
 		window.addEventListener("load", () => {
 
+
 			PokiSDK.setDebugTouchOverlayController(true);
 
 			PokiSDK.init().then(
@@ -89,12 +90,13 @@
 					onPokiInitComplete(true);
 				}
 			);
+
 			let config;
 
+			
 config = {
-    "key": "bic1",
-    "title": "BadIceCream 1",
-    "filename": "BadIceCream1_sdk",
+    "title": "BadIceCream 2",
+    "filename": "BadIceCream2",
     "pokiSDK": true,
     "debugPoki": false,
     "showFPS": false,
@@ -121,7 +123,6 @@ config = {
             0.03
         ]
     },
-    "box2dVersion": "none",
     "skipFramesOfScene": null,
     "buttonPokiSDKActions": null,
     "retryButtonIDS": null,
@@ -130,15 +131,16 @@ config = {
     "actionWhenRetryButtonEncountered": null,
     "binary": [
         {
-            "name": "BadIceCream1_sdk",
-            "path": "assets/BadIceCream1_sdk.swf",
-            "size": 1937690,
+            "name": "BadIceCream2",
+            "path": "assets/BadIceCream2_sdk.swf",
+            "size": 3207867,
             "resourceType": "GAME"
         }
     ],
     "runtime": "js/BadIceCream.js"
 };
 
+			
 			PokiSDK.setDebug(config.debugPoki);
 
 			Loader.init(config);
@@ -161,12 +163,11 @@ config = {
 				}, (instance) => {
 					PokiSDK.gameLoadingFinished();
 					window.nitromePreloaderSetComplete();
-
 				})
-
 			}
-			window.nitromePreloaderInit('bad-ice-cream');
+			window.nitromePreloaderInit('bad-ice-cream-2');
 		})
+
 	</script>
   <script src="js/analytics_ubg_v1_4.js"></script>
 </body>
